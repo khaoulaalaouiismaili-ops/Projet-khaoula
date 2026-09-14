@@ -4,18 +4,11 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 public class IntPriorityQueue implements Queue<Integer> {
 
-    /** Tableau représentant le tas : le fils gauche de i est en 2*i+1. */
-    private Integer[] heap;
 
-    /** Nombre d'éléments effectivement présents dans le tas. */
+    private Integer[] heap;
     private int size;
 
-    /**
-     * Construit une file de priorité vide.
-     *
-     * @param capacity nombre d'éléments que la file peut initialement contenir
-     * @throws IllegalArgumentException si la capacité est strictement négative
-     */
+
     public IntPriorityQueue(int capacity) {
         if (capacity < 0) {
             throw new IllegalArgumentException("La capacité doit être positive ou nulle.");
@@ -34,14 +27,7 @@ public class IntPriorityQueue implements Queue<Integer> {
         return size;
     }
 
-    /**
-     * Insère un élément dans le tas : il est placé en dernière feuille puis
-     * remonté tant qu'il est plus prioritaire que son père. La capacité est
-     * doublée si le tas est plein : l'insertion réussit donc toujours.
-     *
-     * @param e l'élément à insérer
-     * @return toujours {@code true}
-     */
+
     @Override
     public boolean insertElement(Integer e) {
         if (size == heap.length) {
@@ -53,12 +39,7 @@ public class IntPriorityQueue implements Queue<Integer> {
         return true;
     }
 
-    /**
-     * Consulte la racine du tas, c'est-à-dire l'élément le plus prioritaire.
-     *
-     * @return l'élément de plus grande valeur
-     * @throws NoSuchElementException si la file est vide
-     */
+
     @Override
     public Integer element() {
         if (isEmpty()) {
@@ -67,13 +48,6 @@ public class IntPriorityQueue implements Queue<Integer> {
         return heap[0];
     }
 
-    /**
-     * Retire la racine du tas : la dernière feuille la remplace puis est
-     * redescendue tant qu'un de ses fils est plus prioritaire qu'elle.
-     *
-     * @return l'élément de plus grande valeur
-     * @throws NoSuchElementException si la file est vide
-     */
     @Override
     public Integer popElement() {
         Integer root = element();
@@ -84,13 +58,6 @@ public class IntPriorityQueue implements Queue<Integer> {
         return root;
     }
 
-    /**
-     * Retourne un itérateur sur les éléments du tas. Conformément à la
-     * spécification des itérateurs, aucun ordre de parcours n'est garanti :
-     * le parcours suit ici l'ordre de stockage dans le tableau.
-     *
-     * @return un itérateur sur les éléments de la file
-     */
     @Override
     public Iterator<Integer> iterator() {
         return new Iterator<Integer>() {
@@ -114,12 +81,7 @@ public class IntPriorityQueue implements Queue<Integer> {
         };
     }
 
-    /**
-     * Remonte l'élément d'indice donné jusqu'à ce que l'invariant du tas soit
-     * rétabli.
-     *
-     * @param index indice de l'élément à remonter
-     */
+
     private void siftUp(int index) {
         int current = index;
         while (current > 0) {
@@ -132,12 +94,7 @@ public class IntPriorityQueue implements Queue<Integer> {
         }
     }
 
-    /**
-     * Redescend l'élément d'indice donné jusqu'à ce que l'invariant du tas soit
-     * rétabli.
-     *
-     * @param index indice de l'élément à redescendre
-     */
+
     private void siftDown(int index) {
         int current = index;
         while (true) {
@@ -159,23 +116,13 @@ public class IntPriorityQueue implements Queue<Integer> {
         }
     }
 
-    /**
-     * Échange le contenu de deux cases du tas.
-     *
-     * @param i indice de la première case
-     * @param j indice de la seconde case
-     */
-    private void swap(int i, int j) {
+        private void swap(int i, int j) {
         Integer tmp = heap[i];
         heap[i] = heap[j];
         heap[j] = tmp;
     }
 
-    /**
-     * Redimensionne le tableau représentant le tas.
-     *
-     * @param newCapacity nouvelle capacité, supérieure au nombre d'éléments
-     */
+
     private void resize(int newCapacity) {
         Integer[] newHeap = new Integer[newCapacity];
         System.arraycopy(heap, 0, newHeap, 0, size);
